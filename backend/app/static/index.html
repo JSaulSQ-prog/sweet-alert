@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sweet Alert — Evaluación de riesgo</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="page-header">
+        <div class="eyebrow">SWEET ALERT</div>
+        <h1 class="page-title">Monitorea tu salud y descubre tu riesgo de diabetes</h1>
+        <p class="page-copy">Sweet Alert te ayuda a reunir tu perfil, hábitos diarios y síntomas en una vista moderna. Revisa tu nivel de riesgo y recibe recomendaciones claras para tomar decisiones de salud.</p>
+      </header>
+
+      <section class="top-grid">
+        <div class="card">
+          <h3>Estado actual</h3>
+          <strong>Riesgo actualizado</strong>
+          <p>Registra tu check-in diario para obtener un diagnóstico dinámico y ver cómo cambian los indicadores.</p>
+        </div>
+        <div class="card">
+          <h3>Mensajes clave</h3>
+          <strong>Intervención temprana</strong>
+          <p>Con datos de síntomas, estilo de vida y nutrición, puedes identificar señales antes de que se conviertan en un problema mayor.</p>
+        </div>
+        <div class="card">
+          <h3>Acción</h3>
+          <strong>Personalizado</strong>
+          <p>Ajusta tu perfil una vez y usa los check-ins para ver si mejoras tu riesgo con cada cambio.</p>
+        </div>
+      </section>
+
+      <section class="main-grid">
+        <div class="left-panel">
+          <div class="section-title">Perfil y check-in</div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="sex">Sexo</label>
+              <select id="sex">
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="birth_date">Fecha de nacimiento</label>
+              <input id="birth_date" type="date" />
+            </div>
+            <div class="field">
+              <label for="height_cm">Estatura (cm)</label>
+              <input id="height_cm" type="number" min="100" max="250" />
+            </div>
+            <div class="field">
+              <label for="occupation">Ocupación</label>
+              <input id="occupation" type="text" placeholder="Ej. Enfermera" />
+            </div>
+            <div class="field">
+              <label for="education_level">Educación</label>
+              <select id="education_level">
+                <option value="1">Nunca asistió</option>
+                <option value="2">Primaria</option>
+                <option value="3">Secundaria</option>
+                <option value="4">Técnico / superior</option>
+                <option value="5">Universitario</option>
+                <option value="6">Posgrado</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="income_level">Ingresos</label>
+              <select id="income_level">
+                <option value="1">Muy bajos</option>
+                <option value="2">Bajos</option>
+                <option value="3">Medios bajos</option>
+                <option value="4">Medios</option>
+                <option value="5">Medios altos</option>
+                <option value="6">Altos</option>
+                <option value="7">Muy altos</option>
+                <option value="8">Muy altos</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button id="save-profile" class="primary">Guardar perfil</button>
+            <button id="reset-form" class="secondary">Limpiar</button>
+          </div>
+
+          <p id="profile-summary" class="muted" style="margin-top: 18px;">Completa tu perfil para personalizar el análisis.</p>
+
+          <div class="section-title" style="margin-top: 32px;">Check-in diario</div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="weight_kg">Peso (kg)</label>
+              <input id="weight_kg" type="number" value="70" />
+            </div>
+            <div class="field">
+              <label for="gen_health">Salud general</label>
+              <select id="gen_health">
+                <option value="1">Excelente</option>
+                <option value="2">Muy buena</option>
+                <option value="3" selected>Buena</option>
+                <option value="4">Regular</option>
+                <option value="5">Mala</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="daily_steps">Pasos diarios</label>
+              <input id="daily_steps" type="number" value="6000" />
+            </div>
+            <div class="field">
+              <label for="sleep_duration_hours">Horas de sueño</label>
+              <input id="sleep_duration_hours" type="number" value="6.5" step="0.5" />
+            </div>
+            <div class="field">
+              <label for="daily_calories">Calorías</label>
+              <input id="daily_calories" type="number" value="2100" />
+            </div>
+            <div class="field">
+              <label for="water_l">Agua (L)</label>
+              <input id="water_l" type="number" value="1.8" step="0.1" />
+            </div>
+          </div>
+
+          <div class="section-title" style="margin-top: 26px;">Síntomas y factores</div>
+          <div class="checkbox-group">
+            <span class="checkbox-pill active">Presión alta</span>
+            <span class="checkbox-pill">Colesterol alto</span>
+            <span class="checkbox-pill">Actividad física</span>
+            <span class="checkbox-pill">Sed excesiva</span>
+            <span class="checkbox-pill">Pérdida de peso</span>
+            <span class="checkbox-pill">Debilidad</span>
+          </div>
+
+          <div class="button-row" style="margin-top: 22px;">
+            <button id="run-checkin" class="primary">Enviar evaluación</button>
+          </div>
+        </div>
+
+        <aside class="right-panel">
+          <div class="section-title">Resumen de resultados</div>
+          <div id="results">
+            <div class="summary-panel">
+              <h3>Esperando datos</h3>
+              <p class="muted">Registra tu perfil y haz el primer check-in para ver la predicción de riesgo y recomendaciones.</p>
+              <div class="stat-row" style="margin-top: 22px;">
+                <div class="stat-box">
+                  <strong>Riesgo</strong>
+                  <span>Sin datos</span>
+                </div>
+                <div class="stat-box">
+                  <strong>Nutrición</strong>
+                  <span>Sin datos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-title" style="margin-top: 28px;">Indicadores clave</div>
+          <div class="card-grid">
+            <div class="metric-card">
+              <strong>Formulación</strong>
+              <span>Peso, actividad y salud componen cada análisis.</span>
+            </div>
+            <div class="metric-card">
+              <strong>Seguimiento</strong>
+              <span>Registro diario para observar tendencias, no solo un número aislado.</span>
+            </div>
+            <div class="metric-card">
+              <strong>Recomendaciones</strong>
+              <span>El plan se apoya en hábitos reales y señales tempranas.</span>
+            </div>
+          </div>
+
+          <div class="section-title" style="margin-top: 28px;">Historial reciente</div>
+          <div id="history-list">
+            <div class="history-item">
+              <strong>Sin evaluaciones</strong>
+              <span class="muted">Completa tu primer check-in para guardar el historial aquí.</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
