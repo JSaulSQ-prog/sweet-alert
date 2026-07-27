@@ -92,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _profile = profile;
         _history = history;
+        _latestAssessment = history.isNotEmpty ? history.first : null;
         _selectedSex = profile.sex;
         _birthDateController.text = profile.birthDate.toIso8601String().split('T').first;
         _heightController.text = profile.heightCm.toString();
@@ -318,6 +319,9 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 18),
             _buildSectionHeader('Check-in diario', 'Registra tu estado de salud y nutrición'),
             _buildCheckInCard(),
+            const SizedBox(height: 18),
+            _buildSectionHeader('Resumen de resultados', 'Consulta el análisis del último check-in'),
+            _buildResultsCard(),
             const SizedBox(height: 18),
             _buildSectionHeader('Historial', 'Revisa tus evaluaciones previas'),
             _buildHistoryCard(),
@@ -677,6 +681,54 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResultsCard() {
+    if (_latestAssessment == null) {
+      return _buildCard(
+        child: const Text('Envía un check-in para ver el resumen de resultados.', style: TextStyle(color: Color(0xFF64748B))),
+      );
+    }
+
+    final assessment = _latestAssessment!;
+    final summaryText = assessment.summary ?? 'Resumen disponible.';
+
+    return _buildCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(summaryText, style: const TextStyle(fontSize: 14, height: 1.5, color: Color(0xFF0F172A))),
+          const SizedBox(height: 14),
+          _buildResultRow('Riesgo de diabetes', assessment.riskLevel, 'Probabilidad estimada: ${(assessment.riskProbability * 100).toStringAsFixed(1)}%'),
+          const SizedBox(height: 10),
+          _buildResultRow('Síntomas compatibles', assessment.symptomsLevel ?? 'n/a', 'Probabilidad estimada: ${(assessment.symptomsProbability != null ? assessment.symptomsProbability! * 100 : 0).toStringAsFixed(1)}%'),
+          const SizedBox(height: 10),
+          _buildResultRow('Nutrición', assessment.nutritionCategory ?? 'n/a', 'Puntaje: ${(assessment.nutritionScore != null ? assessment.nutritionScore!.toStringAsFixed(0) : '-')} / 5'),
+          const SizedBox(height: 10),
+          _buildResultRow('Estilo de vida', assessment.lifestyleCategory ?? 'n/a', 'Probabilidad de trastorno del sueño: ${(assessment.sleepDisorderProbability != null ? assessment.sleepDisorderProbability! * 100 : 0).toStringAsFixed(1)}%'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResultRow(String label, String value, String subtitle) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF0F172A))),
+          const SizedBox(height: 4),
+          Text(value.toUpperCase(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF2563EB))),
+          const SizedBox(height: 2),
+          Text(subtitle, style: const TextStyle(fontSize: 13, color: Color(0xFF64748B))),
         ],
       ),
     );
